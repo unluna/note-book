@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script type="text/javascript">
+
+  (function (window, undefined) {
+    // 绕了一圈，就是为了把jQuery.fn上的方法暴露出去
+    var jQuery = function (selector,context) {
+
+      return new jQuery.fn.init(selector,context)
+    };
+    jQuery.fn=jQuery.prototype={
+      init:function (selector,context) {
+        
+      }
+    };
+    jQuery.fn.init.prototype=jQuery.fn;
+    // 相当于jQuery.fn.init.prototype = jQuery.fn = jQuery.prototype
+    // 也就是jQuery.fn.init.prototype = jQuery.prototype
+    // 也就是jQuery.fn.init = jQuery
+
+    // 最后真正暴露的不是fn，是extend
+  })(window);
+
+    // jQuery.fn.extend({}) 给jq添加方法，做插件的时候用，挂载到jq的原型上
+    // 如果直接在jQuery.extend({})上添加方法，就是jQuery的属性了，不推荐
+</script>
+</body>
+</html>

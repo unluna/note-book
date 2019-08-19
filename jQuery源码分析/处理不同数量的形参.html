@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script type="text/javascript">
+
+  function addMethod(obj, type, f) {
+    let old = obj[type];// undefined
+    // people.name=function(){}
+    obj[type] = function () {
+
+      if (f.length === arguments.length) {
+        return f.apply(this, arguments);
+      } else {
+        return old.apply(this, arguments);
+      }
+    }
+  }
+
+  let people = {
+    name: [
+      '张三',
+      '李四',
+    ]
+  };
+
+  let find0 = function () {
+    return this.name;
+  };
+
+  let find1 = function (name) {
+    let arr = this.name;
+    for (let i = 0; i <= arr.length; i++) {
+      if (arr[i] === name) {
+        return (arr[i] + '在' + i + '位')
+      }
+    }
+  };
+
+  // addMethod(people, 'find', find0);
+  addMethod(people, 'find', find1);
+  console.log(people.find('张三'));
+</script>
+</body>
+</html>
